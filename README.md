@@ -12,9 +12,19 @@ Clinical decisions combine **images + labs + narrative**. This baseline can grow
 
 ibd-mre-multimodal/
 ├─ data/ # local data (ignored by git)
+│ └─ README.md # placeholder only
 ├─ src/ # training code, datasets, branches, pretrain
+│ ├─ training/
+│ ├─ datasets/
+│ ├─ branches/
+│ └─ pretrain/
 ├─ artifacts/ # checkpoints (ignored by git)
-├─ .vscode/launch.json # VS Code run configs
+│ └─ .keep # empty placeholder to keep folder in repo
+├─ .vscode/
+│ └─ launch.json # VS Code run configs
+├─ docs/ # concept note, roadmap, figures
+├─ results.md
+├─ requirements.txt
 └─ README.md
 
 
