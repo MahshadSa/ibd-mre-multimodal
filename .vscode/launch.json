@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Train MVP (module)",
+      "type": "python",
+      "request": "launch",
+      "module": "src.training.train",
+      "args": ["--seed", "42", "--samples", "400"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Train MVP (CPU quick)",
+      "type": "python",
+      "request": "launch",
+      "module": "src.training.train",
+      "args": ["--seed", "42", "--samples", "200", "--epochs", "1"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": { "CUDA_VISIBLE_DEVICES": "-1" }
+    },
+    {
+      "name": "Pretrain CLIP (dummy pairs)",
+      "type": "python",
+      "request": "launch",
+      "module": "src.pretrain.train_clip",
+      "args": ["--epochs", "2", "--batch-size", "64", "--text-model", "distilbert-base-uncased"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Pretrain CLIP (paired CSV)",
+      "type": "python",
+      "request": "launch",
+      "module": "src.pretrain.train_clip",
+      "args": ["--csv", "data/paired.csv", "--epochs", "5", "--batch-size", "64"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
