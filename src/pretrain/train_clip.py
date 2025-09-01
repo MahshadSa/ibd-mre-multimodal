@@ -8,8 +8,6 @@ from src.datasets.paired_csv import PairedImageTextCSV
 import numpy as np, random
 from PIL import Image
 
-# --------- helpers ---------
-
 class ProjectionHead(nn.Module):
     def __init__(self, in_dim: int, out_dim: int = 256, hidden: int = 0):
         super().__init__()
@@ -37,9 +35,8 @@ def build_transforms(img_size=224):
         T.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]),
     ])
 
-# ---- top-level DummyPairs so DataLoader can pickle on Windows ----
 class DummyPairs(Dataset):
-    """Synthetic image–text pairs for smoke testing."""
+    """Synthetic image_text pairs for smoke testing."""
     def __init__(self, n=1000, transform=None):
         self.n = n
         self.transform = transform
@@ -53,8 +50,6 @@ class DummyPairs(Dataset):
         if self.transform: img = self.transform(img)
         txt = random.choice(self.phrases)
         return img, txt
-
-# --------- model ---------
 
 class CLIPLike(nn.Module):
     def __init__(self, text_model="distilbert-base-uncased", img_out=512, txt_out=768, proj_dim=256):
@@ -108,7 +103,6 @@ def retrieval_eval(model, dl, device, ks=(1,5,10)):
     r2 = {f"T2I_{k}": v for k, v in recall_at(ranks_ti).items()}
     return {**r1, **r2}
 
-# --------- train entrypoint ---------
 
 def main():
     default_workers = 0 if os.name == "nt" else 2

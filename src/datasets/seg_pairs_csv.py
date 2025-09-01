@@ -6,11 +6,7 @@ import torchvision.transforms as T
 from torch.utils.data import Dataset
 
 class SegPairsCSV(Dataset):
-    """
-    CSV with columns: image_path, mask_path
-    - image: grayscale or RGB PNG/JPG
-    - mask:  PNG where pixels are integer class IDs in [0..num_classes-1]
-    """
+    """CSV with columns: image_path, mask_path """
     def __init__(self, csv_path: str, img_size=256, in_channels=1, num_classes=11):
         self.df = pd.read_csv(csv_path)
         assert {"image_path","mask_path"}.issubset(self.df.columns), "CSV must have image_path,mask_path"
@@ -23,7 +19,7 @@ class SegPairsCSV(Dataset):
         ])
         self.mask_tf = T.Compose([
             T.Resize((img_size, img_size), interpolation=T.InterpolationMode.NEAREST),
-            T.PILToTensor(),  # (1,H,W) uint8
+            T.PILToTensor(),  
         ])
 
     def __len__(self): return len(self.df)
@@ -32,7 +28,7 @@ class SegPairsCSV(Dataset):
         r = self.df.iloc[idx]
         img = Image.open(r["image_path"]).convert("L")
         msk = Image.open(r["mask_path"])
-        img = self.img_tf(img)              # (1,H,W) float
-        msk = self.mask_tf(msk).squeeze(0)  # (H,W) uint8
+        img = self.img_tf(img)              
+        msk = self.mask_tf(msk).squeeze(0)  
         msk = torch.clamp(msk.long(), 0, self.num_classes-1)
         return img, msk

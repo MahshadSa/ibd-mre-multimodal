@@ -5,7 +5,7 @@ from PIL import Image
 from torch.utils.data import Dataset
 
 class PairedImageTextCSV(Dataset):
-    """CSV with columns: image_path, text."""
+    """ CSV with columns: image_path, text. """
     def __init__(self, csv_path: str, transform: Optional[Callable]=None, text_proc: Optional[Callable]=None):
         self.csv_path = Path(csv_path)
         self.df = pd.read_csv(self.csv_path)
